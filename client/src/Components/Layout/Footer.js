@@ -1,8 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import About from './../../Pages/About';
-import Contact from './../../Pages/Contact';
-import Policy from './../../Pages/Policy';
 import "./Footer.css"
 
 const Footer = () => {
