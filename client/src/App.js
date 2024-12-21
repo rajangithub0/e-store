@@ -6,18 +6,33 @@ import Contact from './Pages/Contact';
 import Policy from './Pages/Policy';
 import PageNotFound from './Pages/PageNotFound';
 import Register from './Pages/Auth/Register';
+import Login from './Pages/Auth/Login';
+import Dashboard from './Pages/User/Dashboard';
+import PrivateRoute from './Components/Routes/Private';
+import ForgotPasssword from './Pages/Auth/ForgotPasssword';
+import AdminRoute from './Components/Routes/AdminRoute';
+import AdminDashboard from './Pages/Admin/AdminDashboard';
+
 
 function App() {
   return (
     <>
       <Routes>
         <Route path='/' element={<HomePage />} />
+        <Route path='/dashboard' element={<PrivateRoute />}>
+          <Route path='user' element={<Dashboard />} />
+        </Route>
+        <Route path='/dashboard' element={<AdminRoute />}>
+          <Route path='admin' element={<AdminDashboard />} />
+        </Route>
         <Route path='/about' element={<About />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/forgot-password' element={<ForgotPasssword />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/policy' element={<Policy />} />
         <Route path='*' element={<PageNotFound />} />
-      </Routes>
+      </Routes >
     </>
   );
 }
