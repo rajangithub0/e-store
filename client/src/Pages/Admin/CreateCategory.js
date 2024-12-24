@@ -29,7 +29,6 @@ const CreateCategory = () => {
         }
     }
 
-
     //get all categories
 
     const getAllCategory = async () => {
@@ -44,7 +43,6 @@ const CreateCategory = () => {
             toast.error('Error loading categories')
         }
     }
-
     useEffect(() => {
         getAllCategory()
     }, [])
@@ -84,8 +82,6 @@ const CreateCategory = () => {
             console.log(error);
             toast.error('something went wrong in input form')
         }
-
-
     }
 
 
