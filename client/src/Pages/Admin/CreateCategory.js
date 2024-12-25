@@ -5,7 +5,6 @@ import toast from 'react-hot-toast'
 import axios from 'axios'
 import { Modal } from 'antd'
 import CategoryForm from '../../Components/Form/CategoryForm'
-import PrivateRoute from './../../Components/Routes/Private';
 
 const CreateCategory = () => {
     const [categories, setCategories] = useState([])
