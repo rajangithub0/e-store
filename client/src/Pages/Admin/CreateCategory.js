@@ -120,7 +120,7 @@ const CreateCategory = () => {
                                 </tbody>
                             </table>
                         </div>
-                        <Modal onCancel={() => setVisible(false)} footer={null} visible={visible}>
+                        <Modal onCancel={() => setVisible(false)} footer={null} open={visible}>
                             <CategoryForm value={updateName} setValue={setUpdateName} handleSubmit={handleUpdate} />
                         </Modal>
                     </div>
