@@ -11,7 +11,13 @@ const Policy = () => {
                 <div className='col-md-4 '>
                     <h1 className='bg-dark p-2 mt-4 text-white text-center'>POLICY US</h1>
                     <p className='text-justify mt-4'>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, neque fuga ipsum modi blanditiis eaque quasi eum nobis quas. Perspiciatis sed, esse sunt velit provident molestias quam dolores iusto molestiae?Lorem ipsum dolor, sit amet consectetur adipisicing elit. Beatae, architecto dolor quas dicta dolores eius soluta? Velit eveniet possimus molestiae recusandae, amet facere autem. Quibusdam ea aut excepturi beatae sit.
+                        Welcome to [Your Company Name]. We value your privacy and are committed to protecting your information. This policy explains how we collect, use, and disclose your data when you visit our website or use our services.
+                        <h4>Information We Collect</h4>
+                        <p>We collect personal information, such as your name, email, phone number, address, and payment details. Non-personal data, including browser type, device info, IP address, and cookies, is also gathered to enhance user experience.</p>
+                        <h5>Sharing Information</h5>
+                        <p>We do not sell your data. We may share it with service providers, legal authorities, or in the event of a business merger.</p>
+                        <h6>Contact Us</h6>
+                        <p>For questions, contact us at [Your Email] or [Your Phone].Effective Date: [Insert Date]</p>
                     </p>
 
                 </div>
