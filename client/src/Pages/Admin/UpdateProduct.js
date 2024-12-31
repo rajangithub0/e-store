@@ -24,6 +24,11 @@ const UpdateProduct = () => {
         try {
             const { data } = await axios.get(`/api/v1/product/get-product/${params.slug}`)
             setName(data.product.name)
+            setDescription(data.product.description)
+            setPrice(data.product.price)
+            setCategory(data.product.category._id)
+            setQuantity(data.product.quantity)
+            setShipping(data.product.shipping)
         } catch (error) {
             console.log(error);
         }
