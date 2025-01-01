@@ -18,6 +18,7 @@ const UpdateProduct = () => {
     const [category, setCategory] = useState("")
     const [quantity, setQuantity] = useState("")
     const [shipping, setShipping] = useState("")
+    const [id, setId] = useState("")
 
     //get single product
     const getSingleProduct = async () => {
@@ -29,6 +30,7 @@ const UpdateProduct = () => {
             setCategory(data.product.category._id)
             setQuantity(data.product.quantity)
             setShipping(data.product.shipping)
+            setId(data.product._id)
         } catch (error) {
             console.log(error);
         }
@@ -59,7 +61,7 @@ const UpdateProduct = () => {
     }, [])
 
     //create product function
-    const handleCreate = async (e) => {
+    const handleUpdate = async (e) => {
         e.preventDefault()
         try {
             const productData = new FormData()
@@ -70,7 +72,7 @@ const UpdateProduct = () => {
             productData.append('quantity', quantity)
             productData.append('shipping', shipping)
             productData.append('photo', photo)
-            const { data } = axios.post('/api/v1/product/create-product', productData)
+            const { data } = axios.post(`/api/v1/product/update-product/${id}`, productData)
             if (data?.success) {
                 toast.error(data?.message)
             } else {
@@ -83,6 +85,22 @@ const UpdateProduct = () => {
             toast.error('Error creating product')
         }
     }
+
+    //delete a product
+    const handleDelete = async () => {
+        try {
+            let answer = window.prompt("Are You Sure want to delete this product ? ");
+            if (!answer) return;
+            const { data } = await axios.delete(
+                `/api/v1/product/delete-product/${id}`
+            );
+            toast.success("Product Deleted Succfully");
+            navigate("/dashboard/admin/products");
+        } catch (error) {
+            console.log(error);
+            toast.error("Something went wrong");
+        }
+    };
 
     return (
         <Layout title={'dashboard create product'}>
@@ -139,7 +157,8 @@ const UpdateProduct = () => {
                                 <Option value='0'>No</Option>
                             </Select>
                         </div>
-                        <div className='mb-3'><button className='btn btn-primary' onClick={handleCreate}>UPDATE PRODUCT</button></div>
+                        <div className='mb-3'><button className='btn btn-primary' onClick={handleUpdate}>UPDATE PRODUCT</button></div>
+                        <div className="mb-3"><button className="btn btn-danger" onClick={handleDelete}>DELETE PRODUCT</button></div>
                     </div>
                 </div>
             </div>
