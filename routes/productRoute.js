@@ -13,7 +13,7 @@ router.post('/create-product', requireSignIn, isAdmin, Formidable(), createProdu
 router.get('/get-product', getProductController)
 
 //get single product ||Get
-router.get('/get-single-product/:slug', getSingleProductController)
+router.get('/get-product/:slug', getSingleProductController)
 
 //get photo from product ||get
 router.get('/product-photo/:pid', productPhotoController)
