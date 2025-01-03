@@ -9,6 +9,9 @@ const router = express.Router()
 //create product ||post 
 router.post('/create-product', requireSignIn, isAdmin, Formidable(), createProductController)
 
+//update product
+router.put('/update-product/:pid', requireSignIn, isAdmin, Formidable(), updateProductController)
+
 //get product ||GET
 router.get('/get-product', getProductController)
 
@@ -21,7 +24,5 @@ router.get('/product-photo/:pid', productPhotoController)
 //delete product
 router.delete('/delete-product/:pid', isAdmin, requireSignIn, deleteProductController)
 
-//update product
-router.put('/update-product/:pid', requireSignIn, isAdmin, Formidable(), updateProductController)
 
 export default router
