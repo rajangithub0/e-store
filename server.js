@@ -1,44 +1,42 @@
+// Importing required modules and packages
 import express from "express";
-import colors from "colors";
-import dotenv from "dotenv";
-import morgan from "morgan";
-import connectDB from "./config/db.js";
-import authRoutes from "./routes/authRoute.js";
-import categoryRoutes from './routes/categoryRoute.js'
-import productRoutes from './routes/productRoute.js'
-import cors from 'cors'
+import colors from "colors"; // For console log colors
+import dotenv from "dotenv"; // For environment variable management
+import morgan from "morgan"; // For HTTP request logging
+import connectDB from "./config/db.js"; // Database connection module
+import authRoutes from "./routes/authRoute.js"; // Authentication routes
+import categoryRoutes from './routes/categoryRoute.js'; // Category routes
+import productRoutes from './routes/productRoute.js'; // Product routes
+import cors from 'cors'; // For Cross-Origin Resource Sharing (CORS)
 
-//configure env
-dotenv.config();
+// Configuration and setup
+dotenv.config(); // Load environment variables from .env file
+connectDB(); // Connect to the database
 
-//databse config
-connectDB();
-
-//rest object
+// Initialize the Express app
 const app = express();
 
-//middelwares
-app.use(cors())
-app.use(express.json());
-app.use(morgan("dev"));
+// Middlewares
+app.use(cors()); // Enable CORS
+app.use(express.json()); // Parse incoming JSON requests
+app.use(morgan("dev")); // Log HTTP requests in development mode
 
-//routes
-app.use("/api/v1/auth", authRoutes);
-app.use("/api/v1/category", categoryRoutes)
-app.use("/api/v1/product", productRoutes)
+// Route definitions
+app.use("/api/v1/auth", authRoutes); // Authentication-related API routes
+app.use("/api/v1/category", categoryRoutes); // Category-related API routes
+app.use("/api/v1/product", productRoutes); // Product-related API routes
 
-//rest api
+// Root endpoint
 app.get("/", (req, res) => {
     res.send("<h1>Welcome to ecommerce app</h1>");
 });
 
-//PORT
-const PORT = process.env.PORT || 8080;
+// Server configuration
+const PORT = process.env.PORT || 8080; // Define port from environment or default to 8080
 
-//run listen
+// Start the server
 app.listen(PORT, () => {
     console.log(
-        `Server Running on ${process.env.DEV_MODE} mode on port ${PORT}`.bgCyan
-            .white
+        `Server Running on ${process.env.DEV_MODE} mode on port ${PORT}`.bgCyan.white
     );
 });
