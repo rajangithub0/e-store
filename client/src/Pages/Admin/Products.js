@@ -1,10 +1,11 @@
+
 import React, { useState, useEffect } from "react";
 import AdminMenu from "../../Components/Layout/AdminMenu";
 import Layout from "./../../Components/Layout/Layout";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
-import './Products.css'
+import './Products.css';
 const Products = () => {
     const [products, setProducts] = useState([]);
 
