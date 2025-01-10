@@ -1,3 +1,10 @@
+// Price Range Array for Filtering Products
+// This array defines various price ranges for filtering products in an e-commerce application.
+// Each object in the array contains:
+// - _id: A unique identifier for the price range
+// - name: A string representation of the price range (e.g., "$0 to $19")
+// - array: A numeric range represented as a two-element array [min, max]
+
 export const Prices = [
     {
         _id: 0,
@@ -29,4 +36,4 @@ export const Prices = [
         name: "More than $100",
         array: [100, 9999]
     }
-]
+];

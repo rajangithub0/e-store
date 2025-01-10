@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from "react";
-import Layout from "./../Components/Layout/Layout";
-import axios from "axios";
-import { Checkbox, Radio } from "antd";
-import { Prices } from "../Components/Prices";
-const HomePage = () => {
-    const [products, setProducts] = useState([]);
-    const [categories, setCategories] = useState([]);
-    const [checked, setChecked] = useState([]);
-    const [radio, setRadio] = useState([]);
-    const [total, setTotal] = useState(0);
-    const [page, setPage] = useState(1);
-    const [loading, setLoading] = useState(false);
+import Layout from "./../Components/Layout/Layout"; // Reusable layout component
+import axios from "axios"; // For making API requests
+import { Checkbox, Radio } from "antd"; // Ant Design components for filters
+import { Prices } from "../Components/Prices"; // Price range data for filtering
 
-    //get all cat
+// HomePage Component
+const HomePage = () => {
+    // State variables
+    const [products, setProducts] = useState([]); // List of products
+    const [categories, setCategories] = useState([]); // List of categories
+    const [checked, setChecked] = useState([]); // Selected categories for filtering
+    const [radio, setRadio] = useState([]); // Selected price range for filtering
+    const [total, setTotal] = useState(0); // Total count of products
+    const [page, setPage] = useState(1); // Current page for pagination
+    const [loading, setLoading] = useState(false); // Loading state for API calls
+
+    /* ----------------------------
+       Fetch and Load Data
+    ---------------------------- */
+    // Get all categories
     const getAllCategory = async () => {
         try {
             const { data } = await axios.get("/api/v1/category/get-category");
@@ -24,11 +30,17 @@ const HomePage = () => {
         }
     };
 
-    useEffect(() => {
-        getAllCategory();
-        getTotal();
-    }, []);
-    //get products
+    // Get total product count
+    const getTotal = async () => {
+        try {
+            const { data } = await axios.get("/api/v1/product/product-count");
+            setTotal(data?.total);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    // Get all products for the current page
     const getAllProducts = async () => {
         try {
             setLoading(true);
@@ -41,21 +53,7 @@ const HomePage = () => {
         }
     };
 
-    //getTOtal COunt
-    const getTotal = async () => {
-        try {
-            const { data } = await axios.get("/api/v1/product/product-count");
-            setTotal(data?.total);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    useEffect(() => {
-        if (page === 1) return;
-        loadMore();
-    }, [page]);
-    //load more
+    // Load more products for pagination
     const loadMore = async () => {
         try {
             setLoading(true);
@@ -63,12 +61,15 @@ const HomePage = () => {
             setLoading(false);
             setProducts([...products, ...data?.products]);
         } catch (error) {
-            console.log(error);
             setLoading(false);
+            console.log(error);
         }
     };
 
-    // filter by cat
+    /* ----------------------------
+       Filters and Handlers
+    ---------------------------- */
+    // Handle category filter
     const handleFilter = (value, id) => {
         let all = [...checked];
         if (value) {
@@ -78,15 +79,8 @@ const HomePage = () => {
         }
         setChecked(all);
     };
-    useEffect(() => {
-        if (!checked.length || !radio.length) getAllProducts();
-    }, [checked.length, radio.length]);
 
-    useEffect(() => {
-        if (checked.length || radio.length) filterProduct();
-    }, [checked, radio]);
-
-    //get filterd product
+    // Filter products by selected categories and price range
     const filterProduct = async () => {
         try {
             const { data } = await axios.post("/api/v1/product/product-filters", {
@@ -98,10 +92,41 @@ const HomePage = () => {
             console.log(error);
         }
     };
+
+    /* ----------------------------
+       useEffect Hooks for Lifecycle
+    ---------------------------- */
+    // Initial data fetch (categories and total product count)
+    useEffect(() => {
+        getAllCategory();
+        getTotal();
+    }, []);
+
+    // Fetch products on page change
+    useEffect(() => {
+        if (page === 1) return;
+        loadMore();
+    }, [page]);
+
+    // Fetch all products if no filters are applied
+    useEffect(() => {
+        if (!checked.length || !radio.length) getAllProducts();
+    }, [checked.length, radio.length]);
+
+    // Apply filters when category or price selection changes
+    useEffect(() => {
+        if (checked.length || radio.length) filterProduct();
+    }, [checked, radio]);
+
+    /* ----------------------------
+       JSX Rendering
+    ---------------------------- */
     return (
-        <Layout title={"ALl Products - Best offers "}>
+        <Layout title={"All Products - Best Offers"}>
             <div className="container-fluid row mt-3">
+                {/* Filter Section */}
                 <div className="col-md-2">
+                    {/* Category Filter */}
                     <h4 className="text-center">Filter By Category</h4>
                     <div className="d-flex flex-column">
                         {categories?.map((c) => (
@@ -113,7 +138,7 @@ const HomePage = () => {
                             </Checkbox>
                         ))}
                     </div>
-                    {/* price filter */}
+                    {/* Price Filter */}
                     <h4 className="text-center mt-4">Filter By Price</h4>
                     <div className="d-flex flex-column">
                         <Radio.Group onChange={(e) => setRadio(e.target.value)}>
@@ -124,6 +149,7 @@ const HomePage = () => {
                             ))}
                         </Radio.Group>
                     </div>
+                    {/* Reset Filters */}
                     <div className="d-flex flex-column">
                         <button
                             className="btn btn-danger"
@@ -133,11 +159,12 @@ const HomePage = () => {
                         </button>
                     </div>
                 </div>
+                {/* Product Listing Section */}
                 <div className="col-md-9">
                     <h1 className="text-center">All Products</h1>
                     <div className="d-flex flex-wrap">
                         {products?.map((p) => (
-                            <div className="card m-2" style={{ width: "18rem" }}>
+                            <div className="card m-2" style={{ width: "18rem" }} key={p._id}>
                                 <img
                                     src={`/api/v1/product/product-photo/${p._id}`}
                                     className="card-img-top"
@@ -149,12 +176,13 @@ const HomePage = () => {
                                         {p.description.substring(0, 30)}...
                                     </p>
                                     <p className="card-text"> $ {p.price}</p>
-                                    <button class="btn btn-primary ms-1">More Details</button>
-                                    <button class="btn btn-secondary ms-1">ADD TO CART</button>
+                                    <button className="btn btn-primary ms-1">More Details</button>
+                                    <button className="btn btn-secondary ms-1">ADD TO CART</button>
                                 </div>
                             </div>
                         ))}
                     </div>
+                    {/* Load More Button */}
                     <div className="m-2 p-3">
                         {products && products.length < total && (
                             <button
@@ -164,7 +192,7 @@ const HomePage = () => {
                                     setPage(page + 1);
                                 }}
                             >
-                                {loading ? "Loading ..." : "Loadmore"}
+                                {loading ? "Loading ..." : "Load More"}
                             </button>
                         )}
                     </div>
@@ -175,3 +203,4 @@ const HomePage = () => {
 };
 
 export default HomePage;
+3
