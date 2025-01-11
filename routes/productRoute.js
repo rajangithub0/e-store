@@ -9,6 +9,7 @@ import {
     productFiltersController,
     productListController,
     productPhotoController,
+    searchProductController,
     updateProductController,
 } from "../controllers/productController.js"; // Product-related controllers
 import { isAdmin, requireSignIn } from "../middlewares/authMiddleware.js"; // Middleware for authentication and admin authorization
@@ -64,6 +65,10 @@ router.delete("/delete-product/:pid", deleteProductController);
 router.post("/product-filters", productFiltersController);
 router.get("/product-count", productCountController);
 router.get("/product-list/:page", productListController);
+
+//search product
+
+router.get("/search/:keyword", searchProductController)
 
 // Export the router for use in the main application
 export default router;
