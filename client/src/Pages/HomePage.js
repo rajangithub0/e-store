@@ -3,10 +3,12 @@ import Layout from "./../Components/Layout/Layout"; // Reusable layout component
 import axios from "axios"; // For making API requests
 import { Checkbox, Radio } from "antd"; // Ant Design components for filters
 import { Prices } from "../Components/Prices"; // Price range data for filtering
+import { useNavigate } from "react-router-dom";
 
 // HomePage Component
 const HomePage = () => {
     // State variables
+    const navigate = useNavigate()
     const [products, setProducts] = useState([]); // List of products
     const [categories, setCategories] = useState([]); // List of categories
     const [checked, setChecked] = useState([]); // Selected categories for filtering
@@ -14,6 +16,7 @@ const HomePage = () => {
     const [total, setTotal] = useState(0); // Total count of products
     const [page, setPage] = useState(1); // Current page for pagination
     const [loading, setLoading] = useState(false); // Loading state for API calls
+
 
     /* ----------------------------
        Fetch and Load Data
@@ -176,7 +179,7 @@ const HomePage = () => {
                                         {p.description.substring(0, 30)}...
                                     </p>
                                     <p className="card-text"> $ {p.price}</p>
-                                    <button className="btn btn-primary ms-1">More Details</button>
+                                    <button className="btn btn-primary ms-1" onClick={() => navigate(`/product/${p.slug}`)}>More Details</button>
                                     <button className="btn btn-secondary ms-1">ADD TO CART</button>
                                 </div>
                             </div>
