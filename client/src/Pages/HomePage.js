@@ -190,7 +190,7 @@ const HomePage = () => {
                         ))}
                     </div>
                     {/* Load More Button */}
-                    <div className="m-2 p-3">
+                    <div className="m-4 p-3">
                         {products && products.length < total && (
                             <button
                                 className="btn btn-warning"

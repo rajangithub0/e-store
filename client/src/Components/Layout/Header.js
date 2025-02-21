@@ -6,6 +6,7 @@ import { useAuth } from '../../context/auth'
 import toast from 'react-hot-toast'
 import SearchInput from '../Form/SearchInput'
 import useCategory from '../../hooks/useCategory'
+import Categories from './../../Pages/Categories';
 
 const Header = () => {
     const [auth, setAuth] = useAuth()
@@ -31,21 +32,31 @@ const Header = () => {
                             </li>
 
                             <li className="nav-item dropdown">
-                                <Link className="nav-link dropdown-toggle" to={"/categories"} role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <Link
+                                    className="nav-link dropdown-toggle"
+                                    to={"/categories"}
+                                    data-bs-toggle="dropdown"
+                                >
                                     Categories
                                 </Link>
                                 <ul className='dropdown-menu'>
+                                    <li>
+                                        <Link className='dropdown-item' to={"/categories"}>
+                                            All Categories
+                                        </Link>
+                                    </li>
                                     {categories?.map((c) => (
-                                        <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            <Link className="dropdown-item" to={`/category/${c.slug}`}>{c.name}</Link>
-                                        </div>
+                                        <li>
+                                            <Link
+                                                className='dropdown-item'
+                                                to={`/category/${c.slug}`}>
+                                                {c.name}
+                                            </Link>
+                                        </li>
                                     ))}
                                 </ul>
                             </li>
 
-                            {/* <li className="nav-item">
-                                <NavLink to="/category" className="nav-link" >Category</NavLink>
-                            </li> */}
                             {!auth.user ? (
                                 <>
                                     <li className="nav-item">
